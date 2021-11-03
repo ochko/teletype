@@ -1,0 +1,52 @@
+11qq 11qq 11qq q1q1q1
+11aa 11aa 11aa a1a1a1
+aq1 aq1 aq1 1qa 1qa 1qa
+22ww 22ww 22ww w2w2w2
+22ss 22ss 22ss s2s2s2
+sw2 sw2 sw2 2ws 2ws 2ws
+33ee 33ee 33ee e3e3e3
+33dd 33dd 33dd d3d3d3
+3ed 3ed 3ed de3 de3 de3
+44rr 44rr 44rr r4r4r4
+44ff 44ff 44ff f4f4f4
+fr4 fr4 fr4 4rf 4rf 4rf
+55tt 55tt 55tt t5t5t5
+55gg 55gg 55gg g5g5g5
+gt5 gt5 gt5 5tg 5tg 5tg
+66yy 66yy 66yy y6y6y6
+66hh 66hh 66hh h6h6h6
+hy6 hy6 hy6 6yh 6yh 6yh
+77uu 77uu 77uu u7u7u7
+77jj 77jj 77jj j7j7j7
+ju7 ju7 ju7 7uj 7uj 7uj
+88ii 88ii 88ii i8i8i8
+88kk 88kk 88kk k8k8k8
+ki8 ki8 ki8 8ik 8ik 8ik
+99oo 99oo 99oo o9o9o9
+99ll 99ll 99ll l9l9l9
+lo9 lo9 lo9 9ol 9ol 9ol
+00pp 00pp 00pp p0p0p0
+00;; 00;; 00;; ;0;0;0
+;p0 ;p0 ;p0 0p; 0p; 0p;
+11 !! 1!1!1!1!
+!h !j !k !l !; !y !u !i !o !p
+22 @@ 2@2@2@2@
+@h @j @k @l @; @y @u @i @o @p
+33 ## 3#3#3#3#
+#h #j #k #l #; #y #u #i #o #p
+44 $$ 4$4$4$4$
+$h $j $k $l $; $y $u $i $o $p
+55 %% 5%5%5%5%
+%h %j %k %l %; %y %u %i %o %p
+66 ^^ 6^6^6^6^
+^a ^s ^d ^f ^g ^q ^w ^e ^r ^t
+77 && 7&7&7&7&
+&a &s &d &f &g &q &w &e &r &t
+88 ** 8*8*8*8*
+*a *s *d *f *g *q *w *e *r *t
+99 (( 9(9(9(9(
+(a (s (d (f (g (q (w (e (r (t
+00 )) 0)0)0)0)
+)a )s )d )f )g )q )w )e )r )t
+(a) (s) (d) (f) (g)
+(q) (w) (e) (r) (t)

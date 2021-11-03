@@ -22,6 +22,8 @@ module Teletype
         @width = @maxw
         @left = 0
       end
+
+      at_exit { $stdout.clear_screen }
     end
 
     def to(x, y)
@@ -56,10 +58,6 @@ module Teletype
       yield
     ensure
       $stdout.print "\e[?25h"
-    end
-
-    def cleanup
-      $stdout.clear_screen
     end
   end
 end

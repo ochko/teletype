@@ -2,31 +2,23 @@
 
 module Teletype
   class Practice
-    def initialize(text, height: 25, width: 120)
+    def initialize(text, height: 5, width: 120)
       @screen = Screen.new(height: height, width: width)
-      stats = Stats.new
+      @stats = Stats.new
 
-      content = []
+      @lines = []
       text.each_line do |line|
         line.chars.each_slice(@screen.width) do |slice|
-          content << slice.join
+          @lines << slice.join
         end
       end
 
-      @pages = content.each_slice(@screen.height).map do |lines|
-        Page.new(lines, @screen, stats)
-      end
+      @pager = Pager.new(@lines, @stats, @screen.height)
     end
 
     def start
-      at_exit do
-        @screen.cleanup
-      end
-
-      loop do
-        page = @pages.shift
-        page.run
-        @pages.push(page)
+      @pager.each do |lines|
+        Page.new(lines, @screen, @stats).run
       end
     end
   end

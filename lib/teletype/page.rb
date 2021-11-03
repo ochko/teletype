@@ -33,6 +33,8 @@ module Teletype
       to(@x, @y)
 
       loop do
+        break if @lines.empty? && @line.nil?
+
         char = Key.read
 
         case char
@@ -54,9 +56,7 @@ module Teletype
           to(@x, @y)
         end
 
-        @screen.log("Ranking #{@stats.ranking.join}")
-
-        break if @lines.empty? && @line.nil?
+        @screen.log(@stats.rankings)
       end
     end
 

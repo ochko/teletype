@@ -3,33 +3,49 @@
 module Teletype
   class Stats
     def initialize
-      @keys = {}
+      @pairs = {}
+      @previous = nil
     end
 
     def hit!(key)
-      lookup(key).hit!
+      lookup(key)&.hit!
     end
 
     def miss!(key)
-      lookup(key).miss!
+      lookup(key)&.miss!
     end
 
     def lookup(key)
-      k = key.downcase
-      @keys[k] ||= Click.new(k)
+      current = key.downcase
+      keys = "#{@previous}#{current}"
+      @previous = current
+      return if keys.strip.length < 2
+
+      @pairs[keys] ||= Pair.new(keys)
     end
 
-    def ranking
-      @keys.values.sort.map(&:to_s)
+    def suggestions
+      @pairs.values.select(&:inefficient?).sort.map(&:keys)
     end
 
-    class Click
-      attr_accessor :key, :hit, :miss
+    def rankings
+      @pairs.values.sort.first(10).map(&:to_s).join(' ')
+    end
 
-      def initialize(key, hit: 0, miss: 0)
-        @key = key
+    class Pair
+      THRESHOLD = 0.8
+
+      # hit/miss is for the second key
+      attr_accessor :keys, :hit, :miss
+
+      def initialize(keys, hit: 0, miss: 0)
+        @keys = keys
         @hit = hit
         @miss = miss
+      end
+
+      def inefficient?
+        rate < THRESHOLD
       end
 
       def hit!
@@ -51,15 +67,11 @@ module Teletype
       end
 
       def <=>(other)
-        [rate, key] <=> [other.rate, other.key]
+        [rate, keys] <=> [other.rate, other.keys]
       end
 
       def to_s
-        case key
-        when "\n", "\r" then '↵'
-        when ' ' then '␣'
-        else; key
-        end
+        keys.gsub(/[\n\r]/, '↵').gsub(' ', '␣')
       end
     end
   end
