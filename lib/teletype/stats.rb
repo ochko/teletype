@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Teletype
+  # Stats keep track of hit/miss rate for each key and suggests a key that needs more practice.
   class Stats
     def initialize
       @pairs = {}
@@ -32,6 +33,8 @@ module Teletype
       @pairs.values.sort.first(10).map(&:to_s).join(' ')
     end
 
+    # It implements hit/miss rate for second keystroke.
+    # Sometimes a key tends be a miss only when preceded by a certain key.
     class Pair
       THRESHOLD = 0.8
 

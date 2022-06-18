@@ -1,0 +1,13 @@
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+  Exclude:
+    - 'exercise/**/*'
+
+Metrics/MethodLength:
+  Max: 17
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - 'x'
+    - 'y'

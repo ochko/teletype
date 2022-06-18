@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Teletype
+  # Prints lines of text to screen and handles key strokes.
   class Page
     def initialize(lines, screen, stats)
       @lines = lines.map { |line| line.gsub("\t", '⇥') }
@@ -43,21 +44,25 @@ module Teletype
         when '⌫'
           erase
         else
-          at = @line[@x]
-          if char == at
-            @stats.hit!(at)
-            print(correct(char))
-          else
-            @stats.miss!(at)
-            print(wrong(visible(char)))
-          end
-          @x += 1
-          fetch if @x == @line.length
-          to(@x, @y)
+          advance(char)
         end
 
         @screen.log(@stats.rankings)
       end
+    end
+
+    def advance(char)
+      at = @line[@x]
+      if char == at
+        @stats.hit!(at)
+        print(correct(char))
+      else
+        @stats.miss!(at)
+        print(wrong(visible(char)))
+      end
+      @x += 1
+      fetch if @x == @line.length
+      to(@x, @y)
     end
 
     def erase

@@ -4,6 +4,9 @@ require 'io/wait'
 require 'io/console'
 
 module Teletype
+  # Key implements console reading for multibyte inputs and translates to unicode
+  # characters. The unicode characters will be useful when displaying the inputs back
+  # to console.
   class Key
     DICTIONARY = {
       "\e" => '␛',

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Teletype
+  # Initializes screen size and click stats, then start the practice page by page.
   class Practice
     def initialize(text, height: 5, width: 120)
       @screen = Screen.new(height: height, width: width)

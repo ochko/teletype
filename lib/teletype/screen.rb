@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Teletype
+  # Screen abstracts console printing, moving to specific row and column.
   class Screen
     attr_accessor :height, :width, :top, :left
 

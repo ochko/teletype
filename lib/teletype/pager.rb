@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Teletype
+  # Pager divides lines of text into proper screen size and provides page suggestion
+  # based on statistics of click accuracy.
   class Pager
     SUGGEST = 1
 
