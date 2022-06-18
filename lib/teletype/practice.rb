@@ -18,6 +18,8 @@ module Teletype
     end
 
     def start
+      at_exit { @stats.save }
+
       @pager.each do |lines|
         Page.new(lines, @screen, @stats).run
       end

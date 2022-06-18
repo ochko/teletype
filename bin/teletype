@@ -19,8 +19,8 @@ paths << 'base' if ARGV.length.zero?
 paths.each do |path|
   path = File.join(exercises, path)
   if File.directory?(path)
-    Dir.glob(File.join(path, '*.*')).each do |path|
-      text += File.read(path)
+    Dir.glob(File.join(path, '*.*')).each do |file|
+      text += File.read(file)
     end
   elsif File.exist?(path)
     text += File.read(path)

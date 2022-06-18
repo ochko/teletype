@@ -4,8 +4,26 @@ module Teletype
   # Stats keep track of hit/miss rate for each key and suggests a key that needs more practice.
   class Stats
     def initialize
-      @pairs = {}
       @previous = nil
+      @pairs = {}
+      load
+    end
+
+    def load
+      return unless File.exist?(file)
+
+      File.readlines(file).each do |line|
+        keys, hit, miss = line.split("\t")
+        @pairs[keys] = Pair.new(keys, hit: Integer(hit), miss: Integer(miss))
+      end
+    end
+
+    def save
+      File.write(file, @pairs.map {|k, p| [k, p.hit, p.miss].join("\t")}.join("\n"))
+    end
+
+    def file
+      File.join(Dir.home, '.teletype-stats')
     end
 
     def hit!(key)
