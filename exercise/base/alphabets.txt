@@ -127,7 +127,7 @@ vbvb cvcv xcxc zxzx vbvb cvcv xcxc zxzx
 mnmn ,m,m .,., /./. mnmn ,m,m .,., /./.
 xzxz cxcx vcvc bvbv xzxz cxcx vcvc bvbv
 /./. .,., ,m,m mnmn /./. .,., ,m,m mnmn
-``aa ``aa ``zz ``zz a`a` z`z` zz`` aa``
+`a` `a` `z` `z` a`a` z`z` `az` `za`
 `s`s `s`s `f`f `f`f v`v` v`v` x`x` x`x`
 ~~jj ~~kk ~~ll ~~;; ~j~j ~k~k ~l~l
 ~/a ~/s ~/d ~/f ~/g ~/j ~/k ~/l
