@@ -3,10 +3,29 @@
 
 require_relative '../lib/teletype'
 
-# text = File.read File.join(File.dirname(__FILE__), "../", 'exercise', 'ruby', 'yield.rb')
+exercises = File.join(File.dirname(__FILE__), '../', 'exercise')
+
+if ARGV.first == '--list'
+  Dir.glob(File.join(exercises, '**', '*.*')).each do |path|
+    puts path.sub(File.join(exercises, ''), '')
+  end
+  exit
+end
+
 text = ''
-text += File.read File.join(File.dirname(__FILE__), '../', 'exercise', 'base', 'alphabets.txt')
-text += File.read File.join(File.dirname(__FILE__), '../', 'exercise', 'base', 'number.txt')
+paths = []
+paths << 'base' if ARGV.length.zero?
+
+paths.each do |path|
+  path = File.join(exercises, path)
+  if File.directory?(path)
+    Dir.glob(File.join(path, '*.*')).each do |path|
+      text += File.read(path)
+    end
+  elsif File.exist?(path)
+    text += File.read(path)
+  end
+end
 
 practice = Teletype::Practice.new(text)
 practice.start
