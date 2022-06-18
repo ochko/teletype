@@ -5,7 +5,7 @@ module Teletype
   class Practice
     def initialize(text, height: 5, width: 120)
       @screen = Screen.new(height: height, width: width)
-      @stats = Stats.new
+      @stats = Stats.new(text)
 
       @lines = []
       text.each_line do |line|

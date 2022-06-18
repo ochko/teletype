@@ -12,7 +12,10 @@
 ### Usage
 
 Practice numeric keys:
-`teletype number`
+`teletype base/number.txt`
+
+Practice basic keys(numeric and letters):
+`teletype base`
 
 Practice with ruby code:
 `teletype ruby`

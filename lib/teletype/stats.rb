@@ -3,23 +3,26 @@
 module Teletype
   # Stats keep track of hit/miss rate for each key and suggests a key that needs more practice.
   class Stats
-    def initialize
+    def initialize(text)
       @previous = nil
       @pairs = {}
-      load
+      load(text)
     end
 
-    def load
+    def load(text)
       return unless File.exist?(file)
 
       File.readlines(file).each do |line|
         keys, hit, miss = line.split("\t")
-        @pairs[keys] = Pair.new(keys, hit: Integer(hit), miss: Integer(miss))
+        @pairs[keys] = Pair.new(keys,
+                                hit: Integer(hit),
+                                miss: Integer(miss),
+                                available: text.scan(keys).count.positive?)
       end
     end
 
     def save
-      File.write(file, @pairs.map {|k, p| [k, p.hit, p.miss].join("\t")}.join("\n"))
+      File.write(file, @pairs.map { |k, p| [k, p.hit, p.miss].join("\t") }.join("\n"))
     end
 
     def file
@@ -43,26 +46,27 @@ module Teletype
       @pairs[keys] ||= Pair.new(keys)
     end
 
-    def suggestions
-      @pairs.values.select(&:inefficient?).sort.map(&:keys)
+    def suggestions(_lines)
+      @pairs.values.select(&:available).select(&:inefficient?).sort.map(&:keys)
     end
 
     def rankings
-      @pairs.values.sort.first(10).map(&:to_s).join(' ')
+      @pairs.values.select(&:available).sort.first(10).map(&:to_s).join(' ')
     end
 
     # It implements hit/miss rate for second keystroke.
-    # Sometimes a key tends be a miss only when preceded by a certain key.
+    # Key miss tends occur when preceded by a certain key.
     class Pair
-      THRESHOLD = 0.8
+      THRESHOLD = 0.7
 
       # hit/miss is for the second key
-      attr_accessor :keys, :hit, :miss
+      attr_accessor :keys, :hit, :miss, :available
 
-      def initialize(keys, hit: 0, miss: 0)
+      def initialize(keys, hit: 0, miss: 0, available: true)
         @keys = keys
         @hit = hit
         @miss = miss
+        @available = available
       end
 
       def inefficient?

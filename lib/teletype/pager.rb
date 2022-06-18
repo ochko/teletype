@@ -4,7 +4,7 @@ module Teletype
   # Pager divides lines of text into proper screen size and provides page suggestion
   # based on statistics of click accuracy.
   class Pager
-    SUGGEST = 1
+    SUGGEST = 3
 
     def initialize(lines, stats, height)
       @lines = lines
@@ -17,7 +17,7 @@ module Teletype
         yield lines
 
         loop do
-          suggestions = @stats.suggestions
+          suggestions = @stats.suggestions(@lines)
           break if suggestions.empty?
 
           yield pick(suggestions)

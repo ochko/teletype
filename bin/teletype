@@ -12,12 +12,13 @@ if ARGV.first == '--list'
   exit
 end
 
-text = ''
-paths = []
-paths << 'base' if ARGV.length.zero?
+paths = ARGV
+paths << 'base' if paths.length.zero?
 
+text = ''
 paths.each do |path|
   path = File.join(exercises, path)
+
   if File.directory?(path)
     Dir.glob(File.join(path, '*.*')).each do |file|
       text += File.read(file)
