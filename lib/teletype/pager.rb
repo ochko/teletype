@@ -25,7 +25,7 @@ module Teletype
 
     def pick(suggestions)
       index = 0.0
-      @lines.sort_by {|line| suggestions.map {|keys| -line.scan(keys).count}.sum + (index += 0.0001)}.first(SUGGEST)
+      @lines.sort_by { |line| suggestions.map { |keys| -line.scan(keys).count }.sum + (index += 0.0001) }.first(SUGGEST)
     end
   end
 end

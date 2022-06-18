@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative '../lib/teletype'
 
-#text = File.read File.join(File.dirname(__FILE__), "../", 'exercise', 'ruby', 'yield.rb')
+# text = File.read File.join(File.dirname(__FILE__), "../", 'exercise', 'ruby', 'yield.rb')
 text = ''
-text += File.read File.join(File.dirname(__FILE__), "../", 'exercise', 'base', 'alphabets.txt')
-text += File.read File.join(File.dirname(__FILE__), "../", 'exercise', 'base', 'number.txt')
+text += File.read File.join(File.dirname(__FILE__), '../', 'exercise', 'base', 'alphabets.txt')
+text += File.read File.join(File.dirname(__FILE__), '../', 'exercise', 'base', 'number.txt')
 
 practice = Teletype::Practice.new(text)
 practice.start
