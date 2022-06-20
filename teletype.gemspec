@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version       = '1.0.1'
   s.authors       = ['Ochirkhuyag.L']
   s.email         = ['ochkoo@gmail.com']
-  s.summary       = 'Typing practice on command line.'
+  s.summary       = 'Typing practice on terminal.'
   s.description   = 'It trains you typing skills with targeted lessons and your preferred text content.'
   s.homepage      = 'https://github.com/ochko/teletype'
   s.license       = 'MIT'
