@@ -7,24 +7,18 @@ module Teletype
       @lines = lines.map { |line| line.gsub("\t", '⇥') }
       @screen = screen
       @stats = stats
+      @y = -1
     end
 
     def fetch
       loop do
         @line = @lines.shift
-        if @y
-          @y += 1
-        else
-          @y = 0
-        end
+        @y += 1
         break if @line.nil? || @line.strip.length.positive?
       end
 
-      @x = if (spaces = @line&.match(/\A\ +/))
-             spaces[0].length
-           else
-             0
-           end
+      # skip white spaces at the beginning of a line
+      @x = @line&.match(/[[:graph:]]/)&.pre_match&.length || 0
     end
 
     def run

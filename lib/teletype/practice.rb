@@ -3,26 +3,25 @@
 module Teletype
   # Initializes screen size and click stats, then start the practice page by page.
   class Practice
-    def initialize(text, stats:, screen:)
-      @screen = screen
-      @stats = stats
-
-      @lines = []
-      text.each_line do |line|
-        line.chars.each_slice(@screen.width) do |slice|
-          @lines << slice.join
-        end
-      end
-
-      @pager = Pager.new(@lines, @stats, @screen.height)
+    def initialize(profile, text:, height:, width:, suggest:, verbose:)
+      @stats = Stats.new(profile, text)
+      @paginator = Paginator.new(
+        profile, text,
+        height: height,
+        width: width,
+        suggest: suggest,
+        verbose: verbose,
+        stats: @stats
+      )
     end
 
     def start
-      at_exit { @stats.save }
-
-      @pager.each do |lines|
-        Page.new(lines, @screen, @stats).run
+      at_exit do
+        @stats.save
+        @paginator.save
       end
+
+      @paginator.run
     end
   end
 end

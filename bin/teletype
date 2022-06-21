@@ -6,38 +6,49 @@ require_relative '../lib/teletype'
 
 exercises = File.join(File.dirname(__FILE__), '../', 'exercise')
 
-statsfile = nil
+profile = nil
 height = 5
 width = 120
+suggest = 3
+verbose = false
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: teletype [options|exercise]"
+  opts.banner = 'Usage: teletype [options] [exercise]'
 
-  opts.on("-l", "--list", "List exercise files") do |v|
+  opts.on('--help', 'Prints this help') do
+    puts opts
+    exit
+  end
+
+  opts.on('-l', '--list', 'List exercise files') do |_v|
     Dir.glob(File.join(exercises, '**', '*.*')).each do |path|
       puts path.sub(File.join(exercises, ''), '')
     end
     exit
   end
 
-  opts.on("-h", "--help", "Prints this help") do
-    puts opts
-    exit
+  opts.on('-p', '--profile [DIR]', 'Specify profile dir. Defaults to ~/.teletype') do |f|
+    profile = f
   end
 
-  opts.on("-s", "--stats [FILE]", "Specify stats file") do |file|
-    statsfile = file
+  opts.on('-s', '--suggest [LINES]', Integer,
+          "Suggested practice lines that needs attention. Defaults to #{suggest}") do |s|
+    suggest = s
   end
 
-  opts.on("-h", "--height [HEIGHT]", Integer, "Height of practice window") do |h|
+  opts.on('-h', '--height [HEIGHT]', Integer, "Height of practice window. Defaults to #{height}") do |h|
     height = h
   end
-  opts.on("-w", "--width [WIDTH]", Integer, "Width of practice window") do |w|
+  opts.on('-w', '--width [WIDTH]', Integer, "Width of practice window. Defaults to #{width}") do |w|
     width = w
+  end
+  opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
+    verbose = v
   end
 end.parse!
 
-statsfile ||= File.join(Dir.home, '.teletype-stats')
+profile ||= File.join(Dir.home, '.teletype')
+Dir.mkdir(profile) unless File.exist?(profile)
 
 paths = ARGV
 paths << 'base' if paths.length.zero?
@@ -55,7 +66,18 @@ paths.each do |path|
   end
 end
 
-screen = Teletype::Screen.new(height: height, width: width)
-stats = Teletype::Stats.new(statsfile, text)
-practice = Teletype::Practice.new(text, stats: stats, screen: screen)
-practice.start
+screen = Teletype::Screen.new(height, width, verbose: verbose)
+stats = Teletype::Stats.new(profile, text)
+paginator = Teletype::Paginator.new(
+  profile, text,
+  suggest: suggest,
+  screen: screen,
+  stats: stats
+)
+
+at_exit do
+  stats.save
+  paginator.save
+end
+
+paginator.run

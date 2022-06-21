@@ -6,6 +6,10 @@ AllCops:
 
 Metrics/MethodLength:
   Max: 17
+Metrics/ParameterLists:
+  Max: 6
+Metrics/BlockLength:
+  Max: 30
 
 Naming/MethodParameterName:
   AllowedNames:

@@ -5,7 +5,8 @@ module Teletype
   class Screen
     attr_accessor :height, :width, :top, :left
 
-    def initialize(height:, width:)
+    def initialize(height, width, verbose: false)
+      @verbose = verbose
       @maxh, @maxw = $stdout.winsize
 
       if @maxh > height
@@ -43,6 +44,8 @@ module Teletype
     end
 
     def log(*lines)
+      return unless @verbose
+
       original = $stdin.cursor
       invisible do
         lines.each_with_index do |line, index|

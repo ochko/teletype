@@ -4,8 +4,8 @@ module Teletype
   # Stats keep track of hit/miss rate for pair of keys.
   # It also has suggestions for keys that need more practice.
   class Stats
-    def initialize(file, text)
-      @file = file
+    def initialize(profile, text)
+      @file = File.join(profile, 'stats')
       @previous = nil
       @pairs = {}
       load(text)
