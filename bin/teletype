@@ -1,16 +1,43 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'optparse'
 require_relative '../lib/teletype'
 
 exercises = File.join(File.dirname(__FILE__), '../', 'exercise')
 
-if ARGV.first == '--list'
-  Dir.glob(File.join(exercises, '**', '*.*')).each do |path|
-    puts path.sub(File.join(exercises, ''), '')
+statsfile = nil
+height = 5
+width = 120
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: teletype [options|exercise]"
+
+  opts.on("-l", "--list", "List exercise files") do |v|
+    Dir.glob(File.join(exercises, '**', '*.*')).each do |path|
+      puts path.sub(File.join(exercises, ''), '')
+    end
+    exit
   end
-  exit
-end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+
+  opts.on("-s", "--stats [FILE]", "Specify stats file") do |file|
+    statsfile = file
+  end
+
+  opts.on("-h", "--height [HEIGHT]", Integer, "Height of practice window") do |h|
+    height = h
+  end
+  opts.on("-w", "--width [WIDTH]", Integer, "Width of practice window") do |w|
+    width = w
+  end
+end.parse!
+
+statsfile ||= File.join(Dir.home, '.teletype-stats')
 
 paths = ARGV
 paths << 'base' if paths.length.zero?
@@ -28,5 +55,7 @@ paths.each do |path|
   end
 end
 
-practice = Teletype::Practice.new(text)
+screen = Teletype::Screen.new(height: height, width: width)
+stats = Teletype::Stats.new(statsfile, text)
+practice = Teletype::Practice.new(text, stats: stats, screen: screen)
 practice.start

@@ -17,7 +17,7 @@ module Teletype
         yield lines
 
         loop do
-          suggestions = @stats.suggestions(@lines)
+          suggestions = @stats.suggestions
           break if suggestions.empty?
 
           yield pick(suggestions)
